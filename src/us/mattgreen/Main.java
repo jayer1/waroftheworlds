@@ -8,8 +8,8 @@ import java.util.TreeMap;
 
 public class Main {
 
-    //private final static FileInput indata = new FileInput("the_book.csv");
-    private final static FileInput indata = new FileInput("newtext.txt");
+    private final static FileInput indata = new FileInput("the_book.csv");
+    //private final static FileInput indata = new FileInput("newtext.txt");
     private final static Map<String, Integer> map = new HashMap<String, Integer>();
     Map<String, List<Main>> counts = new HashMap<String, List<Main>>();
     Map<String, Integer> frequency = new HashMap<>();
@@ -45,7 +45,7 @@ public class Main {
                 }
                 String processed = word.toLowerCase();
                 if (frequency.containsKey(processed)) {
-                    frequency.put(processed, frequency.get(processed + 1));
+                    frequency.put(processed, frequency.get(processed) + 1);
                 } else {
                     frequency.put(processed, 1);
                 }
@@ -54,16 +54,28 @@ public class Main {
 
         }
 
-        System.out.println(frequency);
+        //System.out.println(frequency);
         int mostFrequentlyUsed = 0;
         String theWord = null;
+        int countSingles = 0;
         for (String word : frequency.keySet()) {
             Integer theVal = frequency.get(word);
             if (theVal > mostFrequentlyUsed) {
                 mostFrequentlyUsed = theVal;
                 theWord = word;
             }
+
         }
-        //System.out.println("The most frequently used word is " + theWord + " amount " + mostFrequentlyUsed);
+        //System.out.println("These only have 1 occurrence");
+        int countSingleWords = 0;
+        for (Map.Entry<String, Integer> item : frequency.entrySet()) {
+            if (item.getValue() == 1) {
+                //System.out.println(item.getKey());
+                countSingleWords++;
+            }
+
+        }
+        System.out.println(countSingleWords + " words were only used once.");
+        System.out.println("The most frequently used word is \"" + theWord + "\" which had " + mostFrequentlyUsed + " occurrences.");
     }
 }
